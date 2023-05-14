@@ -56,7 +56,7 @@ func TestPop(t *testing.T) {
 	}
 	v, _ := list.Pop()
 	assert.Equal(t, 9, v)
-	v, _ = list.PopFirst()
+	v, _ = list.PopFront()
 	assert.Equal(t, 0, v)
 	v, _ = list.Pop()
 	assert.Equal(t, 8, v)
@@ -65,5 +65,29 @@ func TestPop(t *testing.T) {
 	storedValues := list.ListValues()
 	if !reflect.DeepEqual(storedValues, expected) {
 		t.Errorf("\nExpected %v\nGot %v", expected, storedValues)
+	}
+}
+
+func TestFillAndEmpty(t *testing.T) {
+	list := NewDeque[int]()
+	expected := make([]int, 10)
+	for i := 0; i < 10; i++ {
+		expected[i] = i
+		list.Add(i)
+	}
+	assert.Equal(t, len(expected), list.Length)
+	storedValues := list.ListValues()
+	if !reflect.DeepEqual(storedValues, expected) {
+		t.Errorf("\nExpected %v\nGot %v", expected, storedValues)
+	}
+	popped := make([]int, 0, list.Length)
+	var v int
+	for !list.IsEmpty() {
+		v, _ = list.PopFront()
+		popped = append(popped, v)
+	}
+	assert.Equal(t, 0, list.Length)
+	if !reflect.DeepEqual(popped, expected) {
+		t.Errorf("\nExpected %v\nGot %v", expected, popped)
 	}
 }

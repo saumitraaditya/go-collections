@@ -49,7 +49,7 @@ func (d *deque[T]) Add(value T) {
 	}
 }
 
-func (d *deque[T]) PopFirst() (T, error) {
+func (d *deque[T]) PopFront() (T, error) {
 	if d.Length == 0 {
 		var t T
 		return t, fmt.Errorf("collection is empty")
@@ -87,4 +87,8 @@ func (d *deque[T]) ListValues() []T {
 		temp = temp.next
 	}
 	return list
+}
+
+func (d *deque[T]) IsEmpty() bool {
+	return d.Length == 0
 }
